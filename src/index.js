@@ -8,11 +8,11 @@ const User = require("./entities/user");
 const swaggerUi = require("swagger-ui-express");
 const { sequelize } = require('./entities/database');
 const swaggerDocument = require("../swagger.json"); //
-const cors = require("cors"); //
+const cors = require('cors')
 
 const app = express();
 app.use(express.json());
-app.use(cors('*'));
+app.use(cors())
 
 // Swagger setup
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
