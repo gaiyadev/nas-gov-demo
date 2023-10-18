@@ -2,12 +2,12 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const { validationResult } = require("express-validator");
 const { body } = require("express-validator");
-const Nin = require("./src/entities/Nin");
-const Bvn = require("./src/entities/Bvn");
-const User = require("./src/entities/user");
+const Nin = require("./entities/Nin");
+const Bvn = require("./entities/Bvn");
+const User = require("./entities/user");
 const swaggerUi = require("swagger-ui-express");
-const { sequelize } = require('./src/entities/database');
-const swaggerDocument = require("./swagger.json"); //
+const { sequelize } = require('./entities/database');
+const swaggerDocument = require("../swagger.json"); //
 const cors = require("cors"); //
 
 const app = express();
