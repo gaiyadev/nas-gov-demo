@@ -28,5 +28,5 @@ jobs:
 
     - name: Restart Node.js Application
       run: |
-        pm2 restart /src/index.js
+        pm2 restart ./src/index.js
       working-directory: root/actions-runner/_work/nas-gov-demo/nas-gov-demo
