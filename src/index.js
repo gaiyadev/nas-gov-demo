@@ -115,7 +115,7 @@ app.post(
 );
 
 app.get("/", (req, res) => {
-  res.status(500).json({ message: "Internal Server Error" });
+  res.status(200).json({ message: "welcome" });
 });
 
 app.get("/nin/:nin", async (req, res) => {

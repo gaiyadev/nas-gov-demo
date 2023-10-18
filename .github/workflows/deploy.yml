@@ -25,3 +25,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
+    - name: Restart Node.js Application
+      run: |
+        pm2 restart ./src/app.js
+      working-directory: ~/actions-runner/_work/nas-gov-demo/nas-gov-demo
