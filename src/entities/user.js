@@ -24,6 +24,27 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+   state: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+    jobtitle: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  }, 
+  
+  local: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+    disabilityStatus: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  uniqueNumber: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
 });
 
 module.exports = User;

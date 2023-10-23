@@ -21,6 +21,24 @@ const Bvn = sequelize.define("Bvn", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+   state: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+    jobtitle: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  }, 
+  
+  local: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+    disabilityStatus: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  
 });
 
 module.exports = Bvn;

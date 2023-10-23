@@ -28,11 +28,14 @@ sequelize.sync()
 app.post(
   "/signup",
   [
-    body("ninNumber").notEmpty().withMessage("NIN number is required"),
+    body("uniqueNumber").notEmpty().withMessage("NIN or bvn number is required"),
     body("firstName").notEmpty().withMessage("First name is required"),
     body("lastName").notEmpty().withMessage("Last name is required"),
     body("email").notEmpty().withMessage("email name is required"),
-
+    body("state").notEmpty().withMessage("state name is required"),
+    body("local").notEmpty().withMessage("local name is required"),
+    body("jobTitle").notEmpty().withMessage("jobTitle name is required"),
+    body("disabilityStatus").notEmpty().withMessage("disabilityStatus name is required"),
     body("password")
       .notEmpty()
       .withMessage("Password is required")
@@ -46,22 +49,26 @@ app.post(
     }
 
     try {
-      const { ninNumber, firstName, lastName, password, email } = req.body;
+      const { uniqueNumber, firstName, lastName, password, email, state, local, disabilityStatus, jobTitle } = req.body;
 
       const existingUser = await User.findOne({ where: { email } });
       if (existingUser) {
         return res
           .status(400)
-          .json({ message: "User with this NIN number already exists" });
+          .json({ message: "User with this email number already exists" });
       }
 
       const hashedPassword = await bcrypt.hash(password, 10);
 
       const newUser = await User.create({
-        ninNumber,
         firstName,
         lastName,
         email,
+        uniqueNumber,
+        state,
+        local,
+        jobtitle: jobTitle,
+        disabilityStatus,
         password: hashedPassword,
       });
 
@@ -118,14 +125,14 @@ app.get("/", (req, res) => {
   res.status(200).json({ message: "welcome" });
 });
 
-app.get("/nin/:nin", async (req, res) => {
-  const nin = await Nin.findOne({ where: { ninNumber: req.params.nin } });
+app.post("/nin", async (req, res) => {
+  const nin = await Nin.findOne({ where: { ninNumber: req.body.nin } });
   res.status(200).json({ data: nin });
 });
 
-app.get("/bvn/:bvn", async (req, res) => {
-  const nin = await Bvn.findOne({ where: { bvnNumber: req.params.bvn } });
-  res.status(200).json({ data: nin });
+app.post("/bvn", async (req, res) => {
+  const bvn = await Bvn.findOne({ where: { bvnNumber: req.body.bvn } });
+  res.status(200).json({ data: bvn });
 });
 
 app.get("/bvn", async (req, res) => {
@@ -144,18 +151,34 @@ app.get("/users", async (req, res) => {
 });
 
 app.get("/users/:id", async (req, res) => {
-  const user = await User.findByPk(req.params.id);
+  const user = await User.findOne({where: {uniqueNumber:req.params.id}});
   res.status(200).json({ data: user });
 });
 
 app.post("/seed-nin", async (req, res) => {
   try {
     await Nin.bulkCreate([
-      { ninNumber: "123456789A", firstName: "John", lastName: "Doe" },
-      { ninNumber: "987654321B", firstName: "Alice", lastName: "Smith" },
-      { ninNumber: "987054321B", firstName: "Alice", lastName: "Smith" },
-      { ninNumber: "187054321B", firstName: "Alice", lastName: "Smith" },
-    ]);
+    { "ninNumber": "112233445A", "firstName": "Liam", "lastName": "Johnson", "state": "kano", "jobtitle": "engineer", "local": "kumbotso", "disabilityStatus": "Chronic Illness" },
+    { "ninNumber": "556677889B", "firstName": "Emma", "lastName": "Martinez", "state": "lagos", "jobtitle": "doctor", "local": "ikeja", "disabilityStatus": "Visual Impairment" },
+    { "ninNumber": "990011223C", "firstName": "Mia", "lastName": "Smith", "state": "abuja", "jobtitle": "teacher", "local": "wuse", "disabilityStatus": "None" },
+    { "ninNumber": "334455667D", "firstName": "Noah", "lastName": "Brown", "state": "rivers", "jobtitle": "nurse", "local": "port harcourt", "disabilityStatus": "Hearing Impairment" },
+    { "ninNumber": "778899001E", "firstName": "Oliver", "lastName": "Davis", "state": "enugu", "jobtitle": "scientist", "local": "enugu north", "disabilityStatus": "None" },
+    { "ninNumber": "112233445F", "firstName": "Ava", "lastName": "Martinez", "state": "kaduna", "jobtitle": "artist", "local": "zaria", "disabilityStatus": "None" },
+    { "ninNumber": "556677889G", "firstName": "Lucas", "lastName": "Garcia", "state": "delta", "jobtitle": "lawyer", "local": "asaba", "disabilityStatus": "None" },
+    { "ninNumber": "990011223H", "firstName": "Sophia", "lastName": "Lee", "state": "ondo", "jobtitle": "pilot", "local": "akure", "disabilityStatus": "None" },
+    { "ninNumber": "334455667I", "firstName": "Jackson", "lastName": "Lopez", "state": "osun", "jobtitle": "chef", "local": "osogbo", "disabilityStatus": "Speech Impairment" },
+    { "ninNumber": "778899001J", "firstName": "Amelia", "lastName": "Thomas", "state": "kogi", "jobtitle": "architect", "local": "lokoja", "disabilityStatus": "None" } ,
+    { "ninNumber": "987654321B", "firstName": "Alice", "lastName": "Smith", "state": "lagos", "jobtitle": "engineer", "local": "ikoyi", "disabilityStatus": "None" },
+    { "ninNumber": "234567890C", "firstName": "Michael", "lastName": "Johnson", "state": "abuja", "jobtitle": "teacher", "local": "garki", "disabilityStatus": "None" },
+    { "ninNumber": "345678901D", "firstName": "Emily", "lastName": "Brown", "state": "enugu", "jobtitle": "nurse", "local": "nsukka", "disabilityStatus": "Mobility Impairment" },
+    { "ninNumber": "456789012E", "firstName": "David", "lastName": "Williams", "state": "rivers", "jobtitle": "scientist", "local": "port harcourt", "disabilityStatus": "None" },
+    { "ninNumber": "567890123F", "firstName": "Olivia", "lastName": "Davis", "state": "ogun", "jobtitle": "artist", "local": "abeokuta", "disabilityStatus": "None" },
+    { "ninNumber": "678901234G", "firstName": "Daniel", "lastName": "Wilson", "state": "benue", "jobtitle": "lawyer", "local": "makurdi", "disabilityStatus": "Cognitive Impairment" },
+    { "ninNumber": "789012345H", "firstName": "Sophia", "lastName": "Anderson", "state": "kano", "jobtitle": "pilot", "local": "kano city", "disabilityStatus": "None" },
+    { "ninNumber": "890123456I", "firstName": "James", "lastName": "Clark", "state": "delta", "jobtitle": "chef", "local": "warri", "disabilityStatus": "None" },
+    { "ninNumber": "901234567J", "firstName": "Ava", "lastName": "Moore", "state": "plateau", "jobtitle": "architect", "local": "jos", "disabilityStatus": "Speech Impairment" }
+]
+);
 
     res.status(201).json({ message: "Nin data seeded successfully." });
   } catch (error) {
@@ -167,15 +190,27 @@ app.post("/seed-nin", async (req, res) => {
 app.post("/seed-bvn", async (req, res) => {
   try {
     await Bvn.bulkCreate([
-      { bvnNumber: "11111111111", firstName: "Smith", lastName: 'drill' },
-      { bvnNumber: "22222222222", firstName: "jonhn", lastName: 'drill'},
-      { bvnNumber: "22222202222" , firstName: "jonhn", lastName: 'Alice'},
-      { bvnNumber: "222226822222" , firstName: "Alice", lastName: 'drill'},
-      { bvnNumber: "32222222222" , firstName: "Alice", lastName: 'drill'},
-
-      // Add more Bvn records as needed
-    ]);
-
+    { "bvnNumber": "11111111111", "firstName": "Smith", "lastName": "Drill", "state": "kano", "jobtitle": "engineer", "local": "kumbotso", "disabilityStatus": "None" },
+    { "bvnNumber": "22222222222", "firstName": "John", "lastName": "Drill", "state": "kano", "jobtitle": "engineer", "local": "kumbotso", "disabilityStatus": "None" },
+    { "bvnNumber": "33333333333", "firstName": "Alice", "lastName": "Johnson", "state": "kano", "jobtitle": "engineer", "local": "kumbotso", "disabilityStatus": "None" },
+    { "bvnNumber": "44444444444", "firstName": "Michael", "lastName": "Smith", "state": "kano", "jobtitle": "engineer", "local": "kumbotso", "disabilityStatus": "None" },
+    { "bvnNumber": "55555555555", "firstName": "Emma", "lastName": "Davis", "state": "kano", "jobtitle": "engineer", "local": "kumbotso", "disabilityStatus": "Hearing Impairment" },
+    { "bvnNumber": "66666666666", "firstName": "Daniel", "lastName": "Wilson", "state": "kano", "jobtitle": "engineer", "local": "kumbotso", "disabilityStatus": "Chronic Illness" },
+    { "bvnNumber": "77777777777", "firstName": "Olivia", "lastName": "Moore", "state": "kano", "jobtitle": "engineer", "local": "kumbotso", "disabilityStatus": "None" },
+    { "bvnNumber": "88888888888", "firstName": "James", "lastName": "Anderson", "state": "kano", "jobtitle": "engineer", "local": "kumbotso", "disabilityStatus": "None" },
+    { "bvnNumber": "99999999999", "firstName": "Sophia", "lastName": "Martinez", "state": "kano", "jobtitle": "engineer", "local": "kumbotso", "disabilityStatus": "None" },
+    { "bvnNumber": "10101010101", "firstName": "Liam", "lastName": "Garcia", "state": "kano", "jobtitle": "engineer", "local": "kumbotso", "disabilityStatus": "None" },
+     { "bvnNumber": "11122334455", "firstName": "Eva", "lastName": "Johnson", "state": "lagos", "jobtitle": "software developer", "local": "ikeja", "disabilityStatus": "Visual Impairment" },
+    { "bvnNumber": "22334455667", "firstName": "Isaac", "lastName": "Williams", "state": "abuja", "jobtitle": "data scientist", "local": "garki", "disabilityStatus": "Hearing Impairment" },
+    { "bvnNumber": "33445566778", "firstName": "Zara", "lastName": "Smith", "state": "kaduna", "jobtitle": "civil engineer", "local": "kawo", "disabilityStatus": "Mobility Impairment" },
+    { "bvnNumber": "44556677889", "firstName": "Oscar", "lastName": "Davis", "state": "rivers", "jobtitle": "graphic designer", "local": "port harcourt", "disabilityStatus": "Cognitive Impairment" },
+    { "bvnNumber": "55667788990", "firstName": "Hannah", "lastName": "Brown", "state": "enugu", "jobtitle": "architect", "local": "nsukka", "disabilityStatus": "Speech Impairment" },
+    { "bvnNumber": "66778899011", "firstName": "Leo", "lastName": "Martinez", "state": "delta", "jobtitle": "mechanical engineer", "local": "warri", "disabilityStatus": "Neurological Impairment" },
+    { "bvnNumber": "77889901122", "firstName": "Aria", "lastName": "Garcia", "state": "ondo", "jobtitle": "pharmacist", "local": "akure", "disabilityStatus": "Developmental Disability" },
+    { "bvnNumber": "88990011233", "firstName": "Elijah", "lastName": "Lopez", "state": "osun", "jobtitle": "doctor", "local": "osogbo", "disabilityStatus": "Psychiatric Disability" },
+    { "bvnNumber": "99001122344", "firstName": "Luna", "lastName": "Wilson", "state": "kogi", "jobtitle": "biologist", "local": "lokoja", "disabilityStatus": "Chronic Illness" },
+    { "bvnNumber": "00112233445", "firstName": "Felix", "lastName": "Moore", "state": "benue", "jobtitle": "chemist", "local": "makurdi", "disabilityStatus": "Other (Specify)" }
+]);
     res.status(201).json({ message: "Bvn data seeded successfully." });
   } catch (error) {
     console.error("Error seeding Bvn data:", error);
@@ -186,20 +221,62 @@ app.post("/seed-bvn", async (req, res) => {
 app.post("/seed-users", async (req, res) => {
   try {
     await User.bulkCreate([
-      {
-        firstName: "John",
-        lastName: "Doe",
-        email: "john.doe@example.com",
-        password: "hashed_password",
-      },
-      {
-        firstName: "Alice",
-        lastName: "Smith",
-        email: "alice.smith@example.com",
-        password: "hashed_password",
-      },
-    ]);
-
+    {
+        "firstName": "Emma",
+        "lastName": "Johnson",
+        "email": "emma.johnson@example.com",
+        "password": "hashed_password",
+        "state": "lagos",
+        "jobtitle": "software engineer",
+        "local": "ikeja",
+        "disabilityStatus": "Developmental Disability",
+        "uniqueNumber": "234567890B",
+    },
+    {
+        "firstName": "Michael",
+        "lastName": "Davis",
+        "email": "michael.davis@example.com",
+        "password": "hashed_password",
+        "state": "abuja",
+        "jobtitle": "data scientist",
+        "local": "garki",
+        "disabilityStatus": "Visual Impairment",
+        "uniqueNumber": "345678901C",
+    },
+    {
+        "firstName": "Olivia",
+        "lastName": "Moore",
+        "email": "olivia.moore@example.com",
+        "password": "hashed_password",
+        "state": "kano",
+        "jobtitle": "civil engineer",
+        "local": "kumbotso",
+        "disabilityStatus": "Speech Impairment",
+        "uniqueNumber": "65432109833"
+    },
+    {
+        "firstName": "Daniel",
+        "lastName": "Wilson",
+        "email": "daniel.wilson@example.com",
+        "password": "hashed_password",
+        "state": "rivers",
+        "jobtitle": "graphic designer",
+        "local": "port harcourt",
+        "disabilityStatus": "Mobility Impairment",
+        "uniqueNumber": "54321098744"
+    },
+    {
+        "firstName": "Sophia",
+        "lastName": "Martinez",
+        "email": "sophia.martinez@example.com",
+        "password": "hashed_password",
+        "state": "enugu",
+        "jobtitle": "architect",
+        "local": "nsukka",
+        "disabilityStatus": "None",
+        "uniqueNumber": "43210987655"
+    }
+]);
     res.status(201).json({ message: "User data seeded successfully." });
   } catch (error) {
     console.error("Error seeding User data:", error);

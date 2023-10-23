@@ -17,13 +17,26 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "ninNumber": { "type": "string" },
                   "firstName": { "type": "string" },
                   "lastName": { "type": "string" },
                   "email": { "type": "string" },
-                  "password": { "type": "string" }
+                  "password": { "type": "string" },
+                  "uniqueNumber": { "type": "string" },
+                  "jobTitle": { "type": "string" },
+                  "local": { "type": "string" },
+                  "state": { "type": "string" },
+                  "disabilityStatus": { "type": "string" }
                 },
-                "required": ["ninNumber", "firstName", "lastName", "email", "password"]
+                "required": [
+                  "firstName",
+                  "lastName",
+                  "email",
+                  "disabilityStatus",
+                  "uniqueNumber",
+                  "jobTitle",
+                  "local",
+                  "state"
+                ]
               }
             }
           }
@@ -52,10 +65,10 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "ninNumber": { "type": "string" },
+                  "email": { "type": "string" },
                   "password": { "type": "string" }
                 },
-                "required": ["ninNumber", "password"]
+                "required": ["email", "password"]
               }
             }
           }
@@ -76,21 +89,24 @@
         }
       }
     },
-    "/nin/{nin}": {
-      "get": {
+    "/nin/": {
+      "post": {
         "summary": "Get user by NIN number",
         "tags": ["Users"],
-        "parameters": [
-          {
-            "name": "nin",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "NIN number of the user"
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nin": { "type": "string" }
+                },
+                "required": ["nin"]
+              }
+            }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "User found",
@@ -111,21 +127,24 @@
         }
       }
     },
-    "/bvn/{bvn}": {
-      "get": {
+    "/bvn/": {
+      "post": {
         "summary": "Get user by BVN number",
         "tags": ["Users"],
-        "parameters": [
-          {
-            "name": "bvn",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "BVN number of the user"
+            "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "bvn": { "type": "string" }
+                },
+                "required": ["bvn"]
+              }
+            }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "User found",
@@ -228,7 +247,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer"
+              "type": "string"
             },
             "description": "User ID"
           }
@@ -304,7 +323,7 @@
           "id": {
             "type": "integer"
           },
-          "ninNumber": {
+          "uniqueNumber": {
             "type": "string"
           },
           "firstName": {
@@ -318,9 +337,31 @@
           },
           "password": {
             "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "local": {
+            "type": "string"
+          },
+          "jobTitle": {
+            "type": "string"
+          },
+          "disabilityStatus": {
+            "type": "string"
           }
         },
-        "required": ["id", "ninNumber", "firstName", "lastName", "email"]
+        "required": [
+          "id",
+          "firstName",
+          "lastName",
+          "email",
+          "disabilityStatus",
+          "uniqueNumber",
+          "jobTitle",
+          "local",
+          "state"
+        ]
       }
     }
   }

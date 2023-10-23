@@ -19,6 +19,24 @@ const Nin = sequelize.define('Nin', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+   state: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+    jobtitle: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  }, 
+  
+  local: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+    disabilityStatus: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+
 }, {
 });
 
