@@ -1,6 +1,5 @@
-// user.js
 const { DataTypes } = require("sequelize");
-const { sequelize } = require("./database"); // Import your Sequelize instance
+const { sequelize } = require("./database"); 
 
 const User = sequelize.define("User", {
   id: {
@@ -28,7 +27,7 @@ const User = sequelize.define("User", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  jobtitle: {
+  jobTitle: {
     type: DataTypes.STRING,
     allowNull: false,
   },

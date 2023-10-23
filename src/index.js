@@ -18,7 +18,7 @@ app.use(cors());
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // Synchronize the models with the database (create tables)
 sequelize
-  .sync()
+  .sync({force: true})
   .then(() => {
     console.log("Tables created successfully.");
   })
@@ -36,8 +36,8 @@ app.post(
     body("lastName").notEmpty().withMessage("Last name is required"),
     body("email").notEmpty().withMessage("email name is required"),
     body("state").notEmpty().withMessage("state name is required"),
-    body("local").notEmpty().withMessage("local name is required"),
-    body("jobTitle").notEmpty().withMessage("jobTitle name is required"),
+    body("local").notEmpty().withMessage("local govt name is required"),
+    body("jobTitle").notEmpty().withMessage("jobTitle is required"),
     body("disabilityStatus")
       .notEmpty()
       .withMessage("disabilityStatus name is required"),
@@ -104,7 +104,7 @@ app.post(
         uniqueNumber,
         state,
         local,
-        jobtitle: jobTitle,
+        jobTitle,
         disabilityStatus,
         password: hashedPassword,
         accessToHousing,
