@@ -26,29 +26,30 @@
                   "local": { "type": "string" },
                   "state": { "type": "string" },
                   "disabilityStatus": { "type": "string" },
-                  "stableHousing": { "type": "string" },
-                  "houseHoldNumber": { "type": "string" },
-                  "inComeLevel": { "type": "string" },
-                  "healthIssurance": { "type": "string" },
-                  "ownershipStatus": { "type": "string" },
-
-                  "otherIncome": { "type": "string" }
+                  "accessToHousing": { "type": "string" },
+                  "houseHoldCount": { "type": "string" },
+                  "incomeLevel": { "type": "string" },
+                  "healthInsurance": { "type": "string" },
+                  "homeOwnership": { "type": "string" },
+                  "phoneNumber": { "type": "string" },
+                  "otherSourcesOfIncome": { "type": "string" }
                 },
                 "required": [
                   "firstName",
                   "lastName",
-                  "inComeLevel",
-                  "houseHoldNumber",
-                  "stableHousing",
                   "email",
                   "disabilityStatus",
-                  "healthIssurance",
                   "uniqueNumber",
                   "jobTitle",
                   "local",
                   "state",
-                  "otherIncome",
-                  "ownershipStatus"
+                  "accessToHousing",
+                  "houseHoldCount",
+                  "incomeLevel",
+                  "healthInsurance",
+                  "otherSourcesOfIncome",
+                  "homeOwnership",
+                  "phoneNumber"
                 ]
               }
             }

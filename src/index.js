@@ -18,7 +18,7 @@ app.use(cors());
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // Synchronize the models with the database (create tables)
 sequelize
-  .sync({alter: true})
+  .sync({ force: true })
   .then(() => {
     console.log("Tables created successfully.");
   })
@@ -46,18 +46,21 @@ app.post(
       .withMessage("Password is required")
       .isLength({ min: 6 })
       .withMessage("Password must be at least 6 characters long"),
-    body("stableHousing").notEmpty().withMessage("stableHousing is required"),
-    body("houseHoldNumber")
+    body("accessToHousing")
       .notEmpty()
-      .withMessage("houseHoldNumber is required"),
-    body("inComeLevel").notEmpty().withMessage("inComeLevel is required"),
-    body("healthIssurance")
+      .withMessage("accessToHousing is required"),
+    body("houseHoldCount").notEmpty().withMessage("houseHoldCount is required"),
+    body("incomeLevel").notEmpty().withMessage("incomeLevel is required"),
+    body("healthInsurance")
       .notEmpty()
-      .withMessage("healthIssurance is required"),
-    body("ownershipStatus")
+      .withMessage("healthInsurance is required"),
+    body("homeOwnership").notEmpty().withMessage("homeOwnership is required"),
+    body("otherSourcesOfIncome")
       .notEmpty()
-      .withMessage("ownershipStatus is required"),
-    body("otherIncome").notEmpty().withMessage("otherIncome is required"),
+      .withMessage("otherSourcesOfIncome is required"),
+    body("phoneNumber")
+      .notEmpty()
+      .withMessage("otherSourcesOfIncome is required"),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -76,12 +79,13 @@ app.post(
         local,
         disabilityStatus,
         jobTitle,
-        stableHousing,
-        houseHoldNumber,
-        inComeLevel,
-        healthIssurance,
-        ownershipStatus,
-        otherIncome,
+        accessToHousing,
+        houseHoldCount,
+        incomeLevel,
+        healthInsurance,
+        otherSourcesOfIncome,
+        homeOwnership,
+        phoneNumber,
       } = req.body;
 
       const existingUser = await User.findOne({ where: { email } });
@@ -103,12 +107,13 @@ app.post(
         jobtitle: jobTitle,
         disabilityStatus,
         password: hashedPassword,
-        stableHousing,
-        houseHoldNumber,
-        inComeLevel,
-        healthIssurance,
-        ownershipStatus,
-        otherIncome,
+        accessToHousing,
+        houseHoldCount,
+        incomeLevel,
+        healthInsurance,
+        otherSourcesOfIncome,
+        homeOwnership,
+        phoneNumber,
       });
 
       res

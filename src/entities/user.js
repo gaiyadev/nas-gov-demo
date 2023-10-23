@@ -45,30 +45,35 @@ const User = sequelize.define("User", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  stableHousing: {
+  accessToHousing: {
     type: DataTypes.STRING,
     allowNull: true,
   }, 
-  houseHoldNumber: {
+  houseHoldCount: {
+    type: DataTypes.NUMBER,
+    allowNull: true,
+  },
+  incomeLevel: {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  inComeLevel: {
+  healthInsurance: {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  healthIssurance: {
+  homeOwnership: {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  ownershipStatus: {
+  otherSourcesOfIncome: {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  otherIncome: {
+    phoneNumber: {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  
 });
 
 module.exports = User;
