@@ -48,7 +48,7 @@ const User = sequelize.define("User", {
   accessToHousing: {
     type: DataTypes.STRING,
     allowNull: true,
-  }, 
+  },
   houseHoldCount: {
     type: DataTypes.NUMBER,
     allowNull: true,
@@ -69,11 +69,10 @@ const User = sequelize.define("User", {
     type: DataTypes.STRING,
     allowNull: true,
   },
-    phoneNumber: {
+  phoneNumber: {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  
 });
 
 module.exports = User;

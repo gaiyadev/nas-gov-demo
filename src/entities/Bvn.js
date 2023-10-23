@@ -3,7 +3,7 @@ const { DataTypes } = require("sequelize");
 const { sequelize } = require("./database");
 
 const Bvn = sequelize.define("Bvn", {
-   id: {
+  id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
@@ -21,24 +21,23 @@ const Bvn = sequelize.define("Bvn", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-   state: {
+  state: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-    jobtitle: {
+  jobtitle: {
     type: DataTypes.STRING,
     allowNull: false,
-  }, 
-  
+  },
+
   local: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-    disabilityStatus: {
+  disabilityStatus: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  
 });
 
 module.exports = Bvn;
