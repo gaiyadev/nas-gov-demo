@@ -25,17 +25,30 @@
                   "jobTitle": { "type": "string" },
                   "local": { "type": "string" },
                   "state": { "type": "string" },
-                  "disabilityStatus": { "type": "string" }
+                  "disabilityStatus": { "type": "string" },
+                  "stableHousing": { "type": "string" },
+                  "houseHoldNumber": { "type": "string" },
+                  "inComeLevel": { "type": "string" },
+                  "healthIssurance": { "type": "string" },
+                  "ownershipStatus": { "type": "string" },
+
+                  "otherIncome": { "type": "string" }
                 },
                 "required": [
                   "firstName",
                   "lastName",
+                  "inComeLevel",
+                  "houseHoldNumber",
+                  "stableHousing",
                   "email",
                   "disabilityStatus",
+                  "healthIssurance",
                   "uniqueNumber",
                   "jobTitle",
                   "local",
-                  "state"
+                  "state",
+                  "otherIncome",
+                  "ownershipStatus"
                 ]
               }
             }
@@ -131,7 +144,7 @@
       "post": {
         "summary": "Get user by BVN number",
         "tags": ["Users"],
-            "requestBody": {
+        "requestBody": {
           "required": true,
           "content": {
             "application/json": {

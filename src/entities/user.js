@@ -1,9 +1,9 @@
 // user.js
-const { DataTypes } = require('sequelize');
-const { sequelize } = require('./database'); // Import your Sequelize instance
+const { DataTypes } = require("sequelize");
+const { sequelize } = require("./database"); // Import your Sequelize instance
 
-const User = sequelize.define('User', {
-     id: {
+const User = sequelize.define("User", {
+  id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
@@ -24,26 +24,50 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-   state: {
+  state: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-    jobtitle: {
+  jobtitle: {
     type: DataTypes.STRING,
     allowNull: false,
-  }, 
-  
+  },
+
   local: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-    disabilityStatus: {
+  disabilityStatus: {
     type: DataTypes.STRING,
     allowNull: false,
   },
   uniqueNumber: {
     type: DataTypes.STRING,
     allowNull: false,
+  },
+  stableHousing: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  }, 
+  houseHoldNumber: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  inComeLevel: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  healthIssurance: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  ownershipStatus: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  otherIncome: {
+    type: DataTypes.STRING,
+    allowNull: true,
   },
 });
 
