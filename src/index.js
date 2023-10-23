@@ -18,7 +18,7 @@ app.use(cors());
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // Synchronize the models with the database (create tables)
 sequelize
-  .sync({force: true})
+  .sync()
   .then(() => {
     console.log("Tables created successfully.");
   })
