@@ -60,7 +60,7 @@ app.post(
       .withMessage("otherSourcesOfIncome is required"),
     body("phoneNumber")
       .notEmpty()
-      .withMessage("otherSourcesOfIncome is required"),
+      .withMessage("phoneNumber is required"),
   ],
   async (req, res) => {
     const errors = validationResult(req);
