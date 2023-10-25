@@ -88,13 +88,19 @@ app.post(
         phoneNumber,
       } = req.body;
 
+      const existingUniqueNumber = await User.findOne({ where: { uniqueNumber: uniqueNumber } });
+      if (existingUniqueNumber) {
+        return res
+          .status(409)
+          .json({ message: "NIN or BVN already exists" });
+      }
+
       const existingUser = await User.findOne({ where: { email } });
       if (existingUser) {
         return res
-          .status(400)
+          .status(409)
           .json({ message: "User with this email number already exists" });
       }
-
       const hashedPassword = await bcrypt.hash(password, 10);
 
       const newUser = await User.create({
